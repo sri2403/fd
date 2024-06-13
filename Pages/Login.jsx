@@ -17,7 +17,7 @@ const Login = ({setToken}) => {
        .then((res)=>{
         setMsg(res.data.message)
         setToken(res.data.token)
-        navigate("/profile")})
+        navigate("/url-shortener")})
        .catch((err)=>{
         console.log(err)
         setMsg("Invalid credentials..!")
