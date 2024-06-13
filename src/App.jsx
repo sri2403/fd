@@ -15,7 +15,7 @@ const App = () => {
           <Route path='/register' element={<Register/>}/>
           <Route path='/login' element={<Login setToken={setToken}/>}/>
           <Route path='/forgot-password' element={<ForgotPassword/>}/>
-          <Route path='/profile' element={<Profile token={token}/>}/>
+          <Route path='/url-shortener' element={<Profile token={token}/>}/>
         </Routes>
       </div>
   );
