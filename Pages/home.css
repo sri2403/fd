@@ -1,0 +1,94 @@
+.heading {
+    font-size: 24px;
+    color: black;
+    text-align: center;
+    margin-top: 150px;
+}
+p{
+    font-size: 20px;
+    color: black;
+    text-align: center;
+}
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px;
+}
+
+.heading {
+    text-align: center;
+    color: white;
+}
+
+.p {
+    text-align: center;
+    color: white;
+}
+
+.button-container {
+    text-align: center;
+}
+
+.url-shortener-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.url-heading {
+    color: white;
+}
+
+.url-input-container {
+    padding: 16px;
+}
+
+.url-label {
+    color: white;
+}
+
+.url-input {
+    margin-left: 5px;
+}
+
+.url-button {
+    margin-left: 5px;
+}
+
+.url-table {
+    margin: auto;
+}
+/* home.css */
+
+/* Styles for the table */
+.url-table {
+    margin: auto;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.url-table th,
+.url-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.url-table th {
+    background-color: #d1cfcf;
+    color: #333;
+    text-align: center;
+}
+
+.url-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.url-table tbody tr:hover {
+    background-color: #ddd;
+}
