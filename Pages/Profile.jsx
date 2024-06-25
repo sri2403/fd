@@ -4,79 +4,102 @@ import "./profile.css";
 import { Link } from 'react-router-dom';
 
 const Profile = ({token}) => {
+    // State variables
     const [url, setUrl] = useState('');
     const [urlData, setUrlData] = useState([]);
-    const[mssg,setMssg]=useState("")
-    
+    const [mssg, setMssg] = useState("");
 
-    const handleSubmit=async(e)=>{
+    // Function to handle form submission
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const payload={url,headers:{
-            Authorization:{token}
-        }}
-        await axios.post('https://bd-6.onrender.com/api/shortUrls', payload)
-        .then((res)=>{
-            const newData={
-                url: res.data.result.url,
-                short: `https://${res.data.result.short}`
-            }
-            setUrlData([...urlData, newData])
-            setMssg(res.data.message)
-            setTimeout(() => {
-                setMssg(" ")
-            }, 2000);
+        const payload = { url };
+
+        try {
+            const response = await axios.post('https://bd-6.onrender.com/api/shortUrls', payload, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            const newData = {
+                url: response.data.result.url,
+                short: `https://${response.data.result.short}`
+            };
+
+            // Update state with new data
+            setUrlData([...urlData, newData]);
+            setMssg(response.data.message);
+
+            // Clear input after submission
             setUrl('');
-        })
-        .catch((err)=>{
-            console.log(err)
+
+            // Clear message after 2 seconds
             setTimeout(() => {
-                setMssg("Invalid credentials..!")
+                setMssg("");
+            }, 2000);
+
+        } catch (error) {
+            console.error('Error:', error);
+            setMssg("Invalid credentials..!");
+
+            // Clear input after error
+            setUrl('');
+
+            // Show error message for 5 seconds
+            setTimeout(() => {
+                setMssg("");
             }, 5000);
-            setUrl("")
-        })
-    }
-   
+        }
+    };
+
     return (
-        <div className='profile-container'>
-            <div className='url-shortener-container'>
-                <h1 className='url-heading'>URL Shortener</h1>
-                <form onSubmit={handleSubmit}>
-                    <div className='url-input-container'>
-                        <label className='url-label'>URL: </label>
-                        <input type="text" className='url-input' value={url} onChange={(e) => setUrl(e.target.value)} />
-                        <button className='url-button' type="submit">Click here</button>
+        <div>
+            {token ? (
+                <div className='profile-container'>
+                    <div className='url-shortener-container'>
+                        <h1 className='url-heading'>URL Shortener</h1>
+                        <form onSubmit={handleSubmit}>
+                            <div className='url-input-container'>
+                                <label className='url-label'>URL: </label>
+                                <input type="text" className='url-input' value={url} onChange={(e) => setUrl(e.target.value)} />
+                                <button className='url-button' type="submit">Click here</button>
+                            </div>
+                            <p>{mssg}</p>
+                        </form>
+                        <table className='url-table'>
+                            <thead>
+                                <tr>
+                                    <th>Full URL</th>
+                                    <th>Short URL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {urlData.map((data, index) => (
+                                    <tr key={index}>
+                                        <td>
+                                            <a href={data.url} target="_blank" rel="noopener noreferrer">
+                                                {data.url}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href={data.short} target="_blank" rel="noopener noreferrer">
+                                                {data.short}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
-                    <p>{mssg}</p>
-                </form>
-                <table className='url-table'>
-                    <thead>
-                        <tr>
-                            <th>Full URL</th>
-                            <th>Short URL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {urlData.map((data, index) => (
-                            <tr key={index}>
-                                <td>
-                                    <a href={data.url} target="_blank" rel="noopener noreferrer">
-                                        {data.url}
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href={data.url} target="_blank" rel="noopener noreferrer">
-                                        {data.short}
-                                    </a>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-            <div className='text-center mt-5'>
-                <Link to="/" className='text-black'><h5>Back to homepage</h5></Link>
-            </div>
+                    <div className='text-center mt-5'>
+                        <Link to="/" className='text-black'><h5>Back to homepage</h5></Link>
+                    </div>
+                </div>
+            ) : (
+                <p className='text-white p-5 m-5'>please login to access url shortener</p>
+            )}
         </div>
     );
 };
