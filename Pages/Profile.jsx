@@ -1,9 +1,9 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import "./profile.css";
 import { Link } from 'react-router-dom';
 
-const Profile = ({token}) => {
+const Profile = ({ token }) => {
     // State variables
     const [url, setUrl] = useState('');
     const [urlData, setUrlData] = useState([]);
@@ -31,8 +31,6 @@ const Profile = ({token}) => {
             // Update state with new data
             setUrlData([...urlData, newData]);
             setMssg(response.data.message);
-
-            // Clear input after submission
             setUrl('');
 
             // Clear message after 2 seconds
@@ -43,11 +41,9 @@ const Profile = ({token}) => {
         } catch (error) {
             console.error('Error:', error);
             setMssg("Invalid credentials..!");
-
-            // Clear input after error
             setUrl('');
 
-            // Show error message for 5 seconds
+            // Clear message after 5 seconds
             setTimeout(() => {
                 setMssg("");
             }, 5000);
@@ -84,7 +80,7 @@ const Profile = ({token}) => {
                                             </a>
                                         </td>
                                         <td>
-                                            <a href={data.short} target="_blank" rel="noopener noreferrer">
+                                            <a href={data.url} target="_blank" rel="noopener noreferrer">
                                                 {data.short}
                                             </a>
                                         </td>
