@@ -4,12 +4,10 @@ import "./profile.css";
 import { Link } from 'react-router-dom';
 
 const Profile = ({ token }) => {
-    // State variables
     const [url, setUrl] = useState('');
     const [urlData, setUrlData] = useState([]);
     const [mssg, setMssg] = useState("");
 
-    // Function to handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -28,12 +26,9 @@ const Profile = ({ token }) => {
                 short: `https://${response.data.result.short}`
             };
 
-            // Update state with new data
             setUrlData([...urlData, newData]);
             setMssg(response.data.message);
             setUrl('');
-
-            // Clear message after 2 seconds
             setTimeout(() => {
                 setMssg("");
             }, 2000);
@@ -42,8 +37,6 @@ const Profile = ({ token }) => {
             console.error('Error:', error);
             setMssg("Invalid credentials..!");
             setUrl('');
-
-            // Clear message after 5 seconds
             setTimeout(() => {
                 setMssg("");
             }, 5000);
@@ -75,12 +68,12 @@ const Profile = ({ token }) => {
                                 {urlData.map((data, index) => (
                                     <tr key={index}>
                                         <td>
-                                            <a href={data.url} target="_blank" rel="noopener noreferrer">
+                                            <a href={data.url} target="_blank" >
                                                 {data.url}
                                             </a>
                                         </td>
                                         <td>
-                                            <a href={data.url} target="_blank" rel="noopener noreferrer">
+                                            <a href={data.url} target="_blank" >
                                                 {data.short}
                                             </a>
                                         </td>
